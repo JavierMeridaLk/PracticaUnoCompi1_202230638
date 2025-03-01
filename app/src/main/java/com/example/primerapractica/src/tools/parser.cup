@@ -1,0 +1,18 @@
+import java_cup.runtime.*;
+
+
+terminal Integer ENTERO;
+terminal String DECIMAL;
+terminal String IDENTIFICADOR;
+terminal String LISTA;
+terminal String PRINT, FORMAT, PLOT;
+terminal String HEADER1, HEADER2, HEADER3, HEADER4, HEADER5, HEADER6;
+terminal String NEGRITA, NEGRITAITALICA, ASTERISCO, SUMA, RESTA, DIVISION, POTENCIA;
+terminal String PARENTESIS_ABIERTO, PARENTESIS_CERRADO, COMILLAS;
+terminal String REPORTE_OPERADORES, REPORTE_ERRORES;
+terminal String ERROR;
+
+non terminal Expresion;
+non terminal Operacion;
+
+start with Expresion;

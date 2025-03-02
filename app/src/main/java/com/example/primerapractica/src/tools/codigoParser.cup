@@ -1,8 +1,9 @@
+//archivo cup que manjea unicamente el texto ingresado
 import java_cup.runtime.*;
 
 
 terminal Integer ENTERO;
-terminal String DECIMAL;
+terminal Double DECIMAL;
 terminal String IDENTIFICADOR;
 terminal String LISTA;
 terminal String PRINT, FORMAT, PLOT;

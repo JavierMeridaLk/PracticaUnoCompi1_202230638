@@ -1,0 +1,46 @@
+package com.example.primerapractica.src.tools;
+import java_cup.runtime.*;
+import java.util.*;
+import com.example.primerapractica.src.basic.Analizador;
+import com.example.primerapractica.src.tools.AnalizadorLexicoTexto;
+
+parser code {:
+    // Connect this parser to a scanner!
+    public class ParserTexto extends java_cup.runtime.lr_parser {
+
+        private Analizador analizador = new Analizador();
+
+        public ParserTexto(AnalizadorLexicoTexto lex) {
+            super(lex);
+        }
+
+        public Analizador getAnalizador() {
+            return analizador;
+        }
+    }
+:}
+
+terminal String TEXTO;
+terminal Integer ENTERO;
+terminal String PUNTO, LISTA;
+terminal String HEADER1, HEADER2, HEADER3, HEADER4, HEADER5, HEADER6;
+terminal String NEGRITA, ITALICA, NEGRITAITALICA;
+terminal String PARRAFO;
+
+non terminal Linea;
+
+start with Linea;
+
+
+Linea ::= HEADER1 TEXTO:txt {: analizador.agregar("# " + txt); :}
+        | HEADER2 TEXTO:txt {: analizador.agregar("## " + txt); :}
+        | HEADER3 TEXTO:txt {: analizador.agregar("### " + txt); :}
+        | HEADER4 TEXTO:txt {: analizador.agregar("#### " + txt); :}
+        | HEADER5 TEXTO:txt {: analizador.agregar("##### " + txt); :}
+        | HEADER6 TEXTO:txt {: analizador.agregar("###### " + txt); :}
+        | NEGRITA TEXTO:txt NEGRITA {: analizador.agregar("**" + txt + "**"); :}
+        | ITALICA TEXTO:txt ITALICA {: analizador.agregar("*" + txt + "*");  :}
+        | NEGRITAITALICA TEXTO:txt NEGRITAITALICA {: analizador.agregar("***" + txt + "***");  :}
+        | ENTERO:e1 PUNTO TEXTO:txt {: analizador.agregar(e1 + ". " + txt); :}
+        | LISTA TEXTO:txt {: analizador.agregar("+ " + txt); :}
+        | PARRAFO:parr {: analizador.agregar(parr); :};

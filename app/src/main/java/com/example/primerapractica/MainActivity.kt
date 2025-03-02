@@ -5,11 +5,15 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.activity.ComponentActivity
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.primerapractica.src.tools.AnalizadorLexicoTexto
+import com.example.primerapractica.src.tools.parser
+import java.io.StringReader
+
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,6 +50,29 @@ fun agregarCeldaTexto(contenedor: LinearLayout) {
     botonEjecutar.setBackgroundColor(Color.parseColor("#9a2bcc"))
 
     botonEjecutar.setOnClickListener {
+        val textoIngresado = editText.text.toString()
+        val reader = StringReader(textoIngresado)
+        val lexer = AnalizadorLexicoTexto(reader)
+        val parser = parser(lexer)
+
+
+
+        try {
+
+            val textoProcesado = parser.analizador.textoProcesado
+            val textView = TextView(contenedor.context)
+
+            textView.text = textoProcesado.toString()
+
+            textView.setTextColor(Color.RED)  // Establecer color de texto
+            // Insertar el TextView en el contenedor para mostrar el texto procesado
+            contenedor.addView(textView)
+
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+
         println("ejecutar")
     }
 
